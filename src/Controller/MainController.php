@@ -9,12 +9,21 @@ use Symfony\Component\Routing\Annotation\Route;
 class MainController extends AbstractController
 {
     /**
-     * @Route("/", name="index")
+     * @Route("/", name="vue_page")
+     * @return Response
+     */
+    public function vuePage() {
+        return $this->render('index.html.twig', ['watch' => true]);
+    }
+
+    /**
+     * @Route("/api", name="api_page")
      * @return Response
      */
     public function main() {
-        return $this->render('index.html.twig', ['watch' => true]);
-        //return new Response('aa');
+
+        return new Response('aa');
     }
+
 
 }

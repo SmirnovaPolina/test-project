@@ -10,11 +10,10 @@
 </div>
 {% block javascripts %}
     {% if watch %}
-        <script src="http://localhost:8080/main.js"></script>
+        <script src="http://localhost:8080/app.js"></script>
     {% else %}
-        <script src="{{ asset('build/main.js') }}?34343"></script>
+        <script src="{{ asset('build/app.js') }}?34343"></script>
     {% endif %}
 {% endblock %}
-
 </body>
 </html>
