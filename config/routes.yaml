@@ -1,2 +1,6 @@
 fos_user:
   resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+
+api_login:
+  path: /api/login_check
+  methods:  POST
