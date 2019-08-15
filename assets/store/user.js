@@ -1,4 +1,5 @@
 import api from '../services/api';
+import router from '../router';
 import jwtDecode from 'jwt-decode';
 
 
@@ -15,22 +16,34 @@ const mutations = {
 		state.authStatus = status
 	},
 };
-const getters = {};
+const getters = {
+	isAuthenticated: state => !!state.token,
+};
 const actions = {
-	auth({commit}, user){
+	login({commit}, user) {
 		return new Promise((resolve, reject) => {
 			api
 				.post('login_check', user)
 				.then(response => {
 					commit('SET_TOKEN', response.token);
 					commit('SET_AUTH_STATUS', true);
-				resolve();
-			})
+					resolve();
+				})
 				.catch(error => {
 					reject(error)
 				});
 		});
 	},
+	logout({commit}) {
+		localStorage.removeItem('user-token');
+		commit('SET_AUTH_STATUS', false);
+		commit('SET_TOKEN', '');
+		router.push('/login');
+	},
+	setToken({commit}){
+		let token = localStorage.getItem('user-token') || '';
+		commit('SET_TOKEN', token);
+	}
 };
 
 export default {

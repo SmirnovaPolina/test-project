@@ -1,6 +1,16 @@
 import Router from 'vue-router';
-const HelloWorld = () => import('../components/HelloWorld');
+import registrator from './registrator';
+import store from '../store';
+
 const Login = () => import('../components/Login');
+
+const ifNotAuthenticated = (to, from, next) => {
+	if (!store.getters['user/isAuthenticated']) {
+		next();
+		return;
+	}
+	next('/login');
+};
 
 const routes = [
 	{
@@ -8,15 +18,13 @@ const routes = [
 		redirect: '/home'
 	},
 	{
-		path: '/home',
-		component: HelloWorld
-	},
-	{
 		path: '/login',
-		component: Login
+		name: 'Login',
+		component: Login,
+		beforeEnter: ifNotAuthenticated,
 	},
 ];
 
 export default new Router({
-	routes: routes
+	routes: routes.concat(registrator)
 });

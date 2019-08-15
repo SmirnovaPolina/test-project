@@ -4,6 +4,8 @@ import Router from 'vue-router'
 import router from './router'
 import store from './store'
 
+store.dispatch('user/setToken')
+
 Vue.use(Router);
 Vue.config.productionTip = false;
 

@@ -1,7 +1,15 @@
 <template>
     <div>
-        LOGIN {{ token }}
-        <button @click="login">1</button>
+        <h1>Авторизация</h1>
+        <div>
+            <input v-model="username"
+                   title="Login"
+            />
+            <input v-model="password"
+                   title="Password"
+            />
+        </div>
+        <button @click="authRequest">Войти</button>
     </div>
 </template>
 
@@ -15,14 +23,22 @@
             	token: 'token',
             }),
         },
+        data(){
+			return {
+				username: '',
+                password: '',
+            };
+        },
         methods: {
             ...mapActions('user', {
-            	auth: 'auth',
+				login: 'login',
             }),
-			login(){
-                this.auth({
-					_username: 'test',
-					_password: 'test',
+			authRequest(){
+                this.login({
+					_username: this.username,
+					_password: this.password,
+                }).then(() => {
+					this.$router.replace('/home');
                 });
             }
         },
